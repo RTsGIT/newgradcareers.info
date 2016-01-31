@@ -206,7 +206,7 @@
 
     function addPage() {
       $pages
-        .append('<div class="col-md-12 panel panel-default"> <a href="https://www.google.com/#q=' + data[index] + '+jobs+graduate" target="_blank"> <h4 class="service-heading">' + data[index] + '</h4> </div>');
+        .append('<div id="'+data[index]+'" class="col-md-12 panel panel-default" onclick="myfunction(this.id)"> <a href="https://www.google.com/#q=' + data[index] + '+jobs+graduate" target="_blank"> <h4 class="service-heading">' + data[index] + '</h4> </div>');
       index++;
     };
 
@@ -226,6 +226,14 @@
         }
       }
     });
+
+    $('#companybox').click(function(){
+      console.log("hii");
+    });
+
+    function myfunction(id){
+      $("#"+id).addClass('clicked');
+    }
   </script>
 
 
