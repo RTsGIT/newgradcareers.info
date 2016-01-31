@@ -206,7 +206,7 @@
 
     function addPage() {
       $pages
-        .append('<div id="'+data[index]+'" class="col-md-12 panel panel-default" onclick="myfunction(this.id)"> <a href="https://www.google.com/#q=' + data[index] + '+jobs+graduate" target="_blank"> <h4 class="service-heading">' + data[index] + '</h4> </div>');
+        .append('<div id="'+data[index][0]+'" class="col-md-12 panel panel-default" onclick="myfunction(this.id)"> <a href="'+data[index][2]+'" target="_blank"> <h4 class="service-heading">' + data[index][1] + '</h4> </div>');
       index++;
     };
 
