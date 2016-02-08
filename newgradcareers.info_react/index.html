@@ -29,6 +29,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.15/browser.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js"></script>
+
+
 </head>
 
 <body id="page-top" class="index">
@@ -86,8 +88,8 @@
   </nav>
   <!-- Header -->
   <header>
-    <div class="container">
-      <div class="intro-text">
+    <div  class="container">
+      <div id="home" class="intro-text">
         <div class="intro-lead-in">New Grads !</div>
         <div class="intro-heading">You miss 100% of the shots you don't take.</div>
         <a href="#companies" class="page-scroll btn btn-xl">Bring it on</a>
@@ -96,20 +98,83 @@
   </header>
   <!--#companies Section -->
   <section id="companies">
-    <div class="container">
+    <div class=" ">
 
-      <div class="row">
-        <div class="col-lg-12 text-center">
-          <h2 class="section-heading">Companies</h2>
-          <h3 class="section-subheading text-muted">List of companies with Engineering positions </h3>
-        </div>
-      </div>
-      <div id="ReactContent" class="row text-center">
 
+
+      <div class="container text-center">
+          <div  id="ReactContent">
+          </div>
       </div>
     </div>
   </section>
-
+  <section id="team" class=" bg-light-gray">
+          <div class="container">
+            <div class="row">
+              <div id="btnBackToList" class="well" style="background:#dd0" onclick="backToHome();">
+                      Back to Companies
+              </div>
+            </div>
+              <div class="row">
+                  <div class="col-lg-12 text-center">
+                      <h2 class="section-heading">Our Amazing Team</h2>
+                      <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-sm-4">
+                      <div class="team-member">
+                          <img src="img/team/1.jpg" class="img-responsive img-circle" alt="">
+                          <h4>Kay Garland</h4>
+                          <p class="text-muted">Lead Designer</p>
+                          <ul class="list-inline social-buttons">
+                              <li><a href="#"><i class="fa fa-twitter"></i></a>
+                              </li>
+                              <li><a href="#"><i class="fa fa-facebook"></i></a>
+                              </li>
+                              <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                              </li>
+                          </ul>
+                      </div>
+                  </div>
+                  <div class="col-sm-4">
+                      <div class="team-member">
+                          <img src="img/team/2.jpg" class="img-responsive img-circle" alt="">
+                          <h4>Larry Parker</h4>
+                          <p class="text-muted">Lead Marketer</p>
+                          <ul class="list-inline social-buttons">
+                              <li><a href="#"><i class="fa fa-twitter"></i></a>
+                              </li>
+                              <li><a href="#"><i class="fa fa-facebook"></i></a>
+                              </li>
+                              <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                              </li>
+                          </ul>
+                      </div>
+                  </div>
+                  <div class="col-sm-4">
+                      <div class="team-member">
+                          <img src="img/team/3.jpg" class="img-responsive img-circle" alt="">
+                          <h4>Diana Pertersen</h4>
+                          <p class="text-muted">Lead Developer</p>
+                          <ul class="list-inline social-buttons">
+                              <li><a href="#"><i class="fa fa-twitter"></i></a>
+                              </li>
+                              <li><a href="#"><i class="fa fa-facebook"></i></a>
+                              </li>
+                              <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                              </li>
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-lg-8 col-lg-offset-2 text-center">
+                      <p class="large text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p>
+                  </div>
+              </div>
+          </div>
+      </section>
 
 
 
@@ -199,6 +264,11 @@
   <script src="https://code.jquery.com/ui/jquery-ui-git.js"></script>
 
   <script src="js/jquery.sausage.js"></script>
+    <script src="js/commentBox.jsx"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/react-bootstrap/0.28.2/react-bootstrap.min.js"></script> -->
+<!-- <script>
+  var Alert = ReactBootstrap.Alert;
+</script> -->
   <!-- <script type="text/javascript">
     // $(window).sausage();
     //   var data;
@@ -232,24 +302,62 @@
       }
     });
   </script> -->
+  <script type="text/javascript">
+  function backToHome(){
+    $('#companies').removeClass("hidden");
+    $('#contact').removeClass("hidden");
+    $('#team').addClass("hidden");
+    window.location.hash='companies';
+    $('html, body').animate({
+               scrollTop: $("#companies").offset().top
+           }, 500);
+  }
+
+  $('#btnBackToList').bind('click',function(){
+    var url = ($(this).attr('href'));
+   var cat = getURLParameter(url, 'name');
+   alert(cat);
+});
+
+function getURLParameter(url, name) {
+    return (RegExp(name + '=' + '(.+?)(&|$)').exec(url)||[,null])[1];
+}
+
+
+
+  </script>
   <script type="text/babel">
 
-  var data = [
-    {id: 1, name: "Pete Hunt", text: "This is one comment"},
-    {id: 2, name: "Jordan Walke", text: "This is *another* comment"}
-  ];
-
+  var data;
     var Company = React.createClass({
       getInitialState:function(){
-        return {color:'col-md-12 panel panel-default'};
+        return {color:'page-scroll panel panel-default'};
       },
       onCompanyClick: function(evt){
+        this.props.onSelect(evt.target.id);
         console.log(evt.target.id);
-        this.setState({color:'col-md-12 panel panel-default clicked'});
+        // this.setState({color:'panel panel-default'});
+        // location.href='#team?name='+evt.target.id;
+        // $('#team').removeClass("hidden");
+        // $('#companies').addClass("hidden");
+        // $('#contact').addClass("hidden");
+        // $('html, body').animate({
+        //            scrollTop: $("#team").offset().top
+        //        }, 500);
       },
       render:function(){
         return(
-            <div className={this.state.color} id={this.props.id} onClick={this.onCompanyClick}><a href={this.props.link} target="_blank"> <h4 className="service-heading">{this.props.name}</h4></a></div>
+            <div className={this.state.color} id="companyItem" onClick={this.onCompanyClick}>
+              <div className='panel-heading clearfix' id={this.props.id}>
+                <a href={this.props.link} target="_blank">
+                  <h4 className="panel-title pull-left">{this.props.name}</h4>
+                </a>
+                <div className=" btn-group pull-right vertical-center">
+                  <a href="#" className="btn btn-info btn-sm">Careers</a>
+                  <a href="#" className="btn btn-primary btn-sm">New Grad </a>
+                </div>
+                </div>
+            </div>
         );
       }
     });
@@ -258,12 +366,10 @@
 
 
       render: function(){
+        var self = this;
         var companyNodes = this.props.data.map(function(company){
           return (
-
-
-            <Company key={company[0]} name={company[1]} id={company[0]} link={company[2]}/>
-
+            <Company onSelect={self.props.onSelect} key={company[0]} name={company[1]} id={company[0]} link={company[2]}/>
           )
         });
         return(
@@ -308,17 +414,187 @@
       render: function(){
         return(
           <div>
-          <div className="form-group">
+          <div className="row">
+            <div className="col-lg-12 text-center">
+              <h2 className="section-heading">Companies</h2>
+              <h3 className="section-subheading text-muted">List of companies with Engineering positions </h3>
+            </div>
+          </div>
+
+          <div className="form-group" >
             <input type="text" className="form-control" placeholder="Search" onChange={this.filterList}/>
             </div>
-            <CompaniesList data={this.state.data} />
-            </div>
+            <CompaniesList data={this.state.data} onSelect={this.props.onSelect}/>
+          </div>
         );
       }
     });
 
+  var posts = [
+      {id: 1, author: "Pete Hunt", text: "This is one comment"},
+      {id: 2, author: "Jordan Walke", text: "This is another comment"}
+    ];
+
+// building company statep
+  var CompanySpace = React.createClass({
+    render: function(){
+      return(
+        <div>
+          <div className="row">
+            <div id="btnBackToList" className="well"  onclick="">
+                    Back to Companies
+            </div>
+          </div>
+          <div className="row">
+                <div className="col-lg-12 text-center">
+                    <h2 className="section-heading">hello {this.props.children}</h2>
+                      <h3 className="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+                </div>
+          </div>
+          <div className="row">
+                <CommentBox  posts={posts} />
+          </div>
+        </div>
+      );
+    }
+  });
+
+  var Playground = React.createClass({
+    getInitialState: function(){
+      return { flag:"showList", company:""};
+    },
+    handleSelect: function(i){
+      console.log("hey you I did it "+i)
+      this.setState({flag:"showCompany", company:i});
+    },
+    render: function(){
+      if(this.state.flag=="showList")
+      return(
+          <CompanyBox onSelect={this.handleSelect} url="positions.csv" />
+      );
+      else
+      return(
+        <CompanySpace>lets play name={this.state.company}</CompanySpace>
+      );
+    }
+  });
+
+
+
+
+  var CommentBox = React.createClass({
+    getInitialState: function() {
+      return {posts: []};
+    },
+    componentDidMount: function(){
+      this.setState({posts:posts});
+    },
+    handleCommentSubmit: function(comment) {
+     // TODO: submit to the server and refresh the list
+       var comments = this.state.posts;
+       comment.id = Date.now();
+       var newComments = comments.concat([comment]);
+       this.setState({posts: newComments});
+   },
+    render: function() {
+      return (
+        <div className="panel panel-info">
+          <div className="col-lg-12 well panel-heading"><h2> Comments</h2> </div>
+          <div className="panel-body">
+            <CommentForm onCommentSubmit={this.handleCommentSubmit}/>
+            <hr/>
+            <CommentList posts={this.state.posts} />
+
+          </div>
+        </div>
+      );
+    }
+  });
+
+
+  var CommentList = React.createClass({
+    render: function() {
+      var commentNodes = this.props.posts.map(function(comment) {
+        console.log(comment);
+      return (
+
+        <Comment author={comment.author} key={comment.id}>
+          {comment.text}
+        </Comment>
+
+      );
+    });
+      return (
+        <div className="commentList">
+        <ul className="media-list">
+          {commentNodes}
+       </ul>
+     </div>
+      );
+    }
+  });
+
+  var CommentForm = React.createClass({
+    getInitialState: function() {
+      return {author: '', text: ''};
+    },
+    handleAuthorChange: function(e) {
+      this.setState({author: e.target.value});
+    },
+    handleTextChange: function(e) {
+      this.setState({text: e.target.value});
+    },
+    handleSubmit: function(e) {
+       e.preventDefault();
+       var author = this.state.author.trim();
+       var text = this.state.text.trim();
+       if (!text || !author) {
+         return;
+       }
+       // TODO: send request to the server
+       this.props.onCommentSubmit({author: author, text: text});
+       this.setState({author: '', text: ''});
+     },
+    render: function() {
+      return (
+        <form className="commentForm form-control" onSubmit={this.handleSubmit}>
+        <input
+            type="text"
+            className ="form-control"
+            placeholder="Your name"
+            value={this.state.author}
+            onChange={this.handleAuthorChange}
+          />
+          <input
+          className ="form-control"
+            type="text"
+            placeholder="Say something..."
+            value={this.state.text}
+            onChange={this.handleTextChange}
+          />
+       <input type="submit" className= "btn btn-primary btn-sm pull-right" value="Post" />
+     </form>
+      );
+    }
+  });
+
+  var Comment = React.createClass({
+  render: function() {
+    return (
+      <li >
+      <div className="comment media-body ">
+        <h2 className="commentAuthor">
+          {this.props.author}
+        </h2>
+        {this.props.children}
+      </div>
+      </li>
+    );
+  }
+});
+
     ReactDOM.render(
-      <CompanyBox url="positions.csv" />,
+      <Playground />,
       document.getElementById('ReactContent')
     );
 
