@@ -97,9 +97,7 @@
     </div>
   </header>
   <!--#companies Section -->
-  <section id="companies">
-          <div  id="ReactContent" class="container">
-          </div>
+  <section id="ReactContent" class="text-center">
   </section>
 
   <!-- Contact Section -->
@@ -318,7 +316,7 @@
       },
       render: function(){
         return(
-          <div>
+          <div className="container">
 
             <div className="text-center">
               <h2 className="section-heading">Companies</h2>
@@ -344,7 +342,7 @@
     },
     render: function(){
       return(
-        <div>
+        <div className="container">
           <div className="row">
             <div id="btnBackToList" className="well col-md-3 col-lg-2 btn btn-defult"  onClick={this.backToListClick}>
                     <span className="glyphicon glyphicon-arrow-left"></span> Back
