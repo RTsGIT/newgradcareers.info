@@ -924,10 +924,10 @@ body {
     background-color: #b8b894;
 }
 
-.row {
+/*.row {
     margin-right: 50px;
     margin-left: 50px;
-}
+}*/
 
 div.hidden {
     visibility: hidden;

@@ -97,16 +97,7 @@
     </div>
   </header>
   <!--#companies Section -->
-  <section id="companies">
-    <div class=" ">
-
-
-
-      <div class="container text-center">
-          <div  id="ReactContent">
-          </div>
-      </div>
-    </div>
+  <section id="ReactContent" class="text-center">
   </section>
 
   <!-- Contact Section -->
@@ -239,9 +230,10 @@
   var data;
     var Company = React.createClass({
       getInitialState:function(){
-        return {color:'page-scroll panel panel-default'};
+        return {color:'col-xs-12 col-md-6 page-scroll panel panel-default'};
       },
       onCompanyClick: function(evt){
+        if(evt.target.tagName=="DIV" || evt.target.tagName=="H4")
         this.props.onSelect(this.props.name);
 
         // this.setState({color:'panel panel-default'});
@@ -254,15 +246,18 @@
                }, 200);
       },
       render:function(){
+        var btnNewgrad;
+        if(this.props.newgrad){
+          btnNewgrad = <a href={this.props.newgrad} target="_blank" className="btn btn-primary btn-sm">New Grad </a>
+        }
         return(
-            <div className={this.state.color} id="companyItem" onClick={this.onCompanyClick}>
+            <div className={this.state.color} id="companyItem"   onClick={this.onCompanyClick}>
               <div className='panel-heading clearfix' id={this.props.id}>
-                <a href={this.props.link} target="_blank">
                   <h4 className="panel-title pull-left">{this.props.name}</h4>
-                </a>
+
                 <div className=" btn-group pull-right vertical-center">
-                  <a href="#" className="btn btn-info btn-sm">Careers</a>
-                  <a href="#" className="btn btn-primary btn-sm">New Grad </a>
+                  {btnNewgrad}
+                  <a href={this.props.careers} target="_blank" className="btn btn-info btn-sm">Careers</a>
                 </div>
                 </div>
             </div>
@@ -277,7 +272,7 @@
         var self = this;
         var companyNodes = this.props.data.map(function(company){
           return (
-            <Company onSelect={self.props.onSelect} key={company[0]} name={company[1]} id={company[0]} link={company[2]}/>
+            <Company onSelect={self.props.onSelect} key={company[0]} name={company[1]} id={company[0]} careers={company[2]} newgrad={company[3]}/>
           )
         });
         return(
@@ -321,13 +316,13 @@
       },
       render: function(){
         return(
-          <div>
-          <div className="row">
-            <div className="col-lg-12 text-center">
+          <div className="container">
+
+            <div className="text-center">
               <h2 className="section-heading">Companies</h2>
-              <h3 className="section-subheading text-muted">List of companies with Engineering positions </h3>
+              <h3 className="section-subheading text-muted">List of companies with Engineering positions <br/><hr/> Did you know that most of the companies have separate page for new grads to apply ? Here is the list for you. </h3>
             </div>
-          </div>
+
 
           <div className="form-group" >
             <input type="text" className="form-control" placeholder="Search" onChange={this.filterList}/>
@@ -338,20 +333,16 @@
       }
     });
 
-  var posts = [
-      {id: 1, author: "Pete Hunt", text: "This is one comment"},
-      {id: 2, author: "Jordan Walke", text: "This is another comment"}
-    ];
+  var posts = [];
 
 // building company statep
   var CompanySpace = React.createClass({
     backToListClick:function(){
-      console.log("here I am");
       this.props.onBack();
     },
     render: function(){
       return(
-        <div>
+        <div className="container">
           <div className="row">
             <div id="btnBackToList" className="well col-md-3 col-lg-2 btn btn-defult"  onClick={this.backToListClick}>
                     <span className="glyphicon glyphicon-arrow-left"></span> Back
@@ -376,11 +367,9 @@
       return { flag:"showList", company:""};
     },
     handleSelect: function(i){
-      console.log("hey you I did it "+i)
       this.setState({flag:"showCompany", company:i});
     },
     getBack: function(i){
-      console.log("get be back please");
       this.setState({flag:"showList", company:""});
     },
     render: function(){
@@ -478,6 +467,7 @@
       return (
         <form className="commentForm form-group" onSubmit={this.handleSubmit}>
         <div className="row" style={{padding:10+'px'}}><div className="col-lg-12">
+        <h3>UNDER CONSTRUCTION</h3>
         <textarea
             rows="3"
             className ="form-control"
