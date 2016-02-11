@@ -400,6 +400,20 @@
        comment.id = Date.now();
        var newComments = comments.concat(comment);
        this.setState({posts: newComments});
+       $.ajax({
+         url: "localhost:3000/api",
+         dataType: 'json',
+         crossDomain: true,
+         type: 'POST',
+         data: comment,
+         success: function(data) {
+           this.setState({data: data});
+         }.bind(this),
+         error: function(xhr, status, err) {
+           this.setState({data: comments});
+           console.error(this.props.url, status, err.toString());
+         }.bind(this)
+       });
    },
     render: function() {
       return (
