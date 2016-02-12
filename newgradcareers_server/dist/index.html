@@ -25,10 +25,11 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react-dom.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.15/browser.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js"></script>
 
 
@@ -76,7 +77,7 @@
             <a href="#page-top"></a>
           </li>
           <li>
-            <a class="page-scroll" href="#ReactContent">Companies</a>
+            <a class="page-scroll" href="#companies">Companies</a>
           </li>
           <li>
             <a class="page-scroll" href="#contact">Contact</a>
@@ -169,64 +170,7 @@
   </footer>
 
   <!-- jQuery -->
-  <!-- build:js -->
-  <script src="js/jquery.js"></script>
-  <!-- Bootstrap Core JavaScript -->
-  <script src="js/bootstrap.min.js"></script>
-  <!-- Plugin JavaScript -->
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-  <script src="js/classie.js"></script>
-
-  <script src="js/cbpAnimatedHeader.js"></script>
-  <!-- Contact Form JavaScript -->
-  <script src="js/jqBootstrapValidation.js"></script>
-  <script src="js/contact_me.js"></script>
-  <!-- Custom Theme JavaScript -->
-  <script src="js/agency.js"></script>
-  <script src="js/jquery.csv.min.js"></script>
-  <script src="https://code.jquery.com/ui/jquery-ui-git.js"></script>
-
-  <script src="js/jquery.sausage.js"></script>
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/react-bootstrap/0.28.2/react-bootstrap.min.js"></script> -->
-<!-- <script>
-  var Alert = ReactBootstrap.Alert;
-</script> -->
-  <!-- <script type="text/javascript">
-    // $(window).sausage();
-    //   var data;
-    var pages = [],
-      ran = 5,
-      $pages = $('#companieslist'),
-      i = 0,
-      index = 0,
-      loading = false;
-
-    function addPage() {
-      $pages
-        .append('<div class="col-md-12 panel panel-default"> <a href="https://www.google.com/#q=' + data[index] + '+jobs+graduate" target="_blank"> <h4 class="service-heading">' + data[index] + '</h4> </div>');
-      index++;
-    };
-
-    //loading data
-    $.ajax({
-      url: "positions.csv",
-      async: true,
-      success: function(csvd) {
-        data = $.csv2Array(csvd);
-      },
-      dataType: "text",
-      complete: function() {
-        // call a function on complete
-        window.data = data;
-        for (i = 0; i < data.length; i++) {
-          addPage();
-        }
-      }
-    });
-  </script> -->
-
-  <script type="text/babel" src="js/app.jsx">
-  <!-- endbuild -->
+  <script src="build/build.min.js"></script>
 
 
 

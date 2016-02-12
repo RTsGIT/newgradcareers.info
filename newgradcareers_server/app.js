@@ -4,6 +4,7 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var logger2 = require('express-logger');
 
 var mongoose = require('mongoose');
 
@@ -20,7 +21,9 @@ var users = require('./routes/users');
 var api = require('./routes/api');
 
 var app = express();
-
+app.use(logger2({
+  path: "logfile.txt"
+}));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
