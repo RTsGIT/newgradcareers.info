@@ -105,8 +105,7 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-12 text-center">
-          <h2 class="section-heading">Know more companies? Let us know.</h2>
-          <h3 class="section-subheading text-muted">[Under Construction]</h3>
+          <h3 class="section-heading">Provide Feedback<br/> or <br/>let us know more companies?.</h3>
         </div>
       </div>
       <div class="row">
@@ -141,7 +140,7 @@
     </div>
   </section>
   <footer>
-    <div class="container">
+    <div class="container" >
       <div class="row">
         <div class="col-md-4">
           <span class="copyright">New Grad Careers </span>
@@ -242,7 +241,7 @@
         // $('#companies').addClass("hidden");
         // $('#contact').addClass("hidden");
         $('html, body').animate({
-                   scrollTop: $("#companies").offset().top
+                   scrollTop: $("#ReactContent").offset().top
                }, 200);
       },
       render:function(){
@@ -350,12 +349,12 @@
           </div>
           <div className="row">
                 <div className="col-lg-12 text-center">
-                    <h2 className="section-heading">{this.props.name}</h2>
-                      <h3 className="section-subheading text-muted"></h3>
+                    <h3 className="section-heading">{this.props.name}</h3>
+                      <h4 className="section-subheading text-muted">Add your queries or experience over here.</h4>
                 </div>
           </div>
           <div className="row">
-                <CommentBox  posts={posts} />
+                <CommentBox  posts={posts} name={this.props.name} />
           </div>
         </div>
       );
@@ -388,22 +387,36 @@
 
 
   var CommentBox = React.createClass({
+    loadCommentsFromServer: function() {
+    $.ajax({
+      url: '/api?name='+this.props.name,
+      dataType: 'json',
+      cache: false,
+      success: function(data) {
+        this.setState({posts: data});
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error('/api', status, err.toString());
+      }.bind(this)
+    });
+  },
     getInitialState: function() {
       return {posts: []};
     },
     componentDidMount: function(){
       this.setState({posts:posts});
+      this.loadCommentsFromServer();
     },
     handleCommentSubmit: function(comment) {
      // TODO: submit to the server and refresh the list
        var comments = this.state.posts;
-       comment.id = Date.now();
+       comment._id = Date.now();
        var newComments = comments.concat(comment);
        this.setState({posts: newComments});
+       comment['company'] = this.props.name;
        $.ajax({
-         url: "localhost:3000/api",
+         url: "/api",
          dataType: 'json',
-         crossDomain: true,
          type: 'POST',
          data: comment,
          success: function(data) {
@@ -418,7 +431,6 @@
     render: function() {
       return (
         <div className="panel panel-info">
-          <div className="col-lg-12 well panel-heading"><h2> Comments</h2> </div>
           <div className="panel-body">
             <CommentForm onCommentSubmit={this.handleCommentSubmit}/>
             <hr/>
@@ -435,13 +447,12 @@
     render: function() {
       var sortedNodes =  this.props.posts.sort(function(a, b) {
         return (a.id - b.id);
-      }).reverse();
+      });
       var commentNodes = sortedNodes.map(function(comment) {
-        console.log(comment);
       return (
 
-        <Comment author={comment.author} key={comment.id}>
-          {comment.text}
+        <Comment user={comment.user} key={comment._id}>
+          {comment.post}
         </Comment>
 
       );
@@ -458,48 +469,51 @@
 
   var CommentForm = React.createClass({
     getInitialState: function() {
-      return {author: '', text: ''};
+      return {user: '', post: ''};
     },
     handleAuthorChange: function(e) {
-      this.setState({author: e.target.value});
+      this.setState({user: e.target.value});
     },
     handleTextChange: function(e) {
-      this.setState({text: e.target.value});
+      this.setState({post: e.target.value});
     },
     handleSubmit: function(e) {
        e.preventDefault();
-       var author = this.state.author.trim();
-       var text = this.state.text.trim();
-       if (!text || !author) {
+       var user = this.state.user.trim();
+       var post = this.state.post.trim();
+       if (!post || !user) {
          return;
        }
        // TODO: send request to the server
-       this.props.onCommentSubmit({author: author, text: text});
-       this.setState({author: '', text: ''});
+       this.props.onCommentSubmit({user: user, post: post});
+       this.setState({user: '', post: ''});
      },
     render: function() {
       return (
         <form className="commentForm form-group" onSubmit={this.handleSubmit}>
         <div className="row" style={{padding:10+'px'}}><div className="col-lg-12">
-        <h3>UNDER CONSTRUCTION</h3>
+        <input
+          className ="form-control"
+          type="text"
+          placeholder="Name or just be anonymous"
+          value={this.state.user}
+          onChange={this.handleAuthorChange}
+          required data-validation-required-message="Please enter your name."
+        />
         <textarea
             rows="3"
             className ="form-control"
             placeholder="Enter here ..."
-            value={this.state.text}
+            value={this.state.post}
             onChange={this.handleTextChange}
+            required data-validation-required-message="Please enter your name."
           /></div>
-          </div><div className="row" style={{padding:10+'px'}}>
-          <div className="col-lg-12">
-          <input
-            className ="form-control"
-            type="text"
-            placeholder="Name"
-            value={this.state.author}
-            onChange={this.handleAuthorChange}
-          />
-          </div></div><div className="row"><div className="col-lg-12">
-       <input type="submit" className= "btn btn-primary btn-lg" value="Post" /></div></div>
+          </div>
+          <div className="row">
+            <div className="col-lg-12">
+              <input type="submit" className= "btn btn-primary btn-lg" value="Post" />
+            </div>
+          </div>
      </form>
       );
     }
@@ -508,11 +522,11 @@
   var Comment = React.createClass({
   render: function() {
     return (
-      <li >
+      <li>
       <div className="panel">
       <div className="comment media-body">
         <strong className="commentAuthor text-success">
-          @{this.props.author}
+          @{this.props.user}
         </strong>
         <p>{this.props.children}</p>
       </div>
